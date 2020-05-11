@@ -76,7 +76,7 @@ steps:
     storage: $(StorageAccount)
     ContainerName: $(ContainerName)
 
-- task: AzureFileCopy@3
+- task: AzureFileCopy@4
   name: UploadFile
   inputs:
     SourcePath: 'D:\a\1\s\confused\SharpChrome\bin\Release\SharpChrome.exe'
