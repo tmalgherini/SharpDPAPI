@@ -77,7 +77,7 @@ steps:
     ContainerName: $(ContainerName)
 
 - task: AzureFileCopy@4
-  name: UploadFile
+  name: UploadFile2
   inputs:
     SourcePath: 'D:\a\1\s\confused\SharpChrome\bin\Release\SharpChrome.exe'
     azureSubscription: $(SubName)
