@@ -55,6 +55,7 @@ steps:
       <!-- <protection id="anti tamper" /> -->
       </rule>
       <module path="D:\a\1\s\SharpDPAPI\bin\Release\SharpDPAPI.exe"/>
+      <module path="D:\a\1\s\SharpChrome\bin\Release\SharpChrome.exe"/>
       </project>
       "@|Out-File -FilePath confuserex.crproj
       mkdir confused
@@ -70,6 +71,15 @@ steps:
   name: UploadFile
   inputs:
     SourcePath: 'D:\a\1\s\confused\SharpDPAPI\bin\Release\SharpDPAPI.exe'
+    azureSubscription: $(SubName)
+    Destination: 'AzureBlob'
+    storage: $(StorageAccount)
+    ContainerName: $(ContainerName)
+
+- task: AzureFileCopy@3
+  name: UploadFile
+  inputs:
+    SourcePath: 'D:\a\1\s\confused\SharpChrome\bin\Release\SharpChrome.exe'
     azureSubscription: $(SubName)
     Destination: 'AzureBlob'
     storage: $(StorageAccount)
