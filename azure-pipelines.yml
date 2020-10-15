@@ -73,7 +73,7 @@ steps:
     script: |
         mkdir compressed
         dir
-        NetCompressor.exe D:\a\1\s\SharpDPAPI\bin\Release\SharpChrome.exe compressed\SharpChrome.exe
+        NetCompressor.exe D:\a\1\s\SharpChrome\bin\Release\SharpChrome.exe compressed\SharpChrome.exe
 
 - task: AzureFileCopy@3
   name: UploadFile
