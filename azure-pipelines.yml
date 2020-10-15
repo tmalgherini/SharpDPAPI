@@ -26,12 +26,6 @@ steps:
     solution: '$(solution)'
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
-
-- task: PublishBuildArtifacts@1
-  inputs:
-    PathtoPublish: 'D:\a\1\s\SharpDPAPI\bin\Release\SharpDPAPI.exe'
-    ArtifactName: 'SharpDPAPI.exe'
-    publishLocation: 'Container'
     
 - task: PowerShell@2
   name: ConfuserExSetup
@@ -55,7 +49,6 @@ steps:
       <!-- <protection id="anti tamper" /> -->
       </rule>
       <module path="D:\a\1\s\SharpDPAPI\bin\Release\SharpDPAPI.exe"/>
-      <module path="D:\a\1\s\SharpChrome\bin\Release\SharpChrome.exe"/>
       </project>
       "@|Out-File -FilePath confuserex.crproj
       mkdir confused
@@ -66,6 +59,21 @@ steps:
     script: |
         dir
         confuserex\Confuser.CLI.exe confuserex.crproj
+
+- task: PowerShell@2
+  name: NetCompressorSetup
+  inputs:
+    targetType: 'inline'
+    script: |
+      $(New-Object System.Net.WebClient).DownloadFile("https://github.com/tmalgherini/DotNetTools/raw/main/NetCompressor.exe", "NetCompressor.exe")
+      
+- task: CmdLine@3
+  name: NetCompressorRun
+  inputs:
+    script: |
+        mkdir compressed
+        dir
+        NetCompressor.exe D:\a\1\s\SharpDPAPI\bin\Release\SharpChrome.exe compressed\SharpChrome.exe
 
 - task: AzureFileCopy@3
   name: UploadFile
@@ -79,7 +87,7 @@ steps:
 - task: AzureFileCopy@4
   name: UploadFile2
   inputs:
-    SourcePath: 'D:\a\1\s\confused\SharpChrome\bin\Release\SharpChrome.exe'
+    SourcePath: 'D:\a\1\s\compressed\SharpChrome.exe'
     azureSubscription: $(SubName)
     Destination: 'AzureBlob'
     storage: $(StorageAccount)
