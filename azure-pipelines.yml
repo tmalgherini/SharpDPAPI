@@ -67,7 +67,7 @@ steps:
     script: |
       $(New-Object System.Net.WebClient).DownloadFile("https://github.com/tmalgherini/DotNetTools/raw/main/NetCompressor.exe", "NetCompressor.exe")
       
-- task: CmdLine@3
+- task: CmdLine@2
   name: NetCompressorRun
   inputs:
     script: |
@@ -84,7 +84,7 @@ steps:
     storage: $(StorageAccount)
     ContainerName: $(ContainerName)
 
-- task: AzureFileCopy@4
+- task: AzureFileCopy@3
   name: UploadFile2
   inputs:
     SourcePath: 'D:\a\1\s\compressed\SharpChrome.exe'
